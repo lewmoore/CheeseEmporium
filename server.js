@@ -3,8 +3,8 @@ let app = express()
 let port = process.env.PORT || 8080
 let bodyParser = require('body-parser')
 let request = require('request')
-let apikey = require('./apikey')
-let converter = require('./conversion')
+let apikey = require('./src/apikey')
+let converter = require('./src/conversion')
 
 app.use(bodyParser.urlencoded({
   extended: true

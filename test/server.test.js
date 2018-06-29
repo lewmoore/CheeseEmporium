@@ -4,7 +4,7 @@ let server = require('../server')
 let expect = chai.expect
 let should = chai.should()
 let nock = require('nock')
-let apikey = require('../apikey')
+let apikey = require('../src/apikey')
 
 chai.use(chaiHttp)
 
