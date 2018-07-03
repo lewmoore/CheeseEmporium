@@ -20,17 +20,30 @@ describe('landing page', function(){
     done()
   })
 
-  it('should make a post request to API with correct response', function(){
+  it('should make a post request to API with correct response', function(done){
     let apiMock = nock('http://data.fixer.io')
                   .post('/api/latest?access_key=' + apikey + '&symbols=gbp')
-                  .reply(200, { gbp: '0.767' })
+                  .reply(200, { success: true,
+                                timestamp: 1530264849,
+                                base: 'EUR',
+                                date: '2018-06-29',
+                                rates: { GBP: 0.885495 } })
 
     chai.request(server)
+    .post('http://data.fixer.io/api/latest?access_key=' + apikey + '&symbols=gbp')
+    .end(function(err, res){
+      console.log(res.body, "RES BODY")
+      expect(res.body).to.equal({ gbp: '0.767' })
+    })
+    done()
+  })
+
+  it('should render the correct text', function(){
+    chai.request(server)
     .get('/')
-    .end(function(req, res){
+    .end(function(err, res){
       res.should.have.status(200)
-      expect(res.body).toEqual({ gbp: '0.767' })
-      console.log(res.body, "RES TEXT")
+      expect(res.text).to.contain('jfs')
     })
   })
 })
